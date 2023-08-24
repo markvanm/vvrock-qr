@@ -1,56 +1,20 @@
 <noscript><h1>Enable JavaScript!</h1></noscript>
 
 
-<textarea autofocus id=i>qr.15c.me</textarea>
+<input autofocus style="width:100%;height:100px;font-size:35px;text-align:center" id=i placeholder="Verkoper naam">
+<div id=q></div><style>*{box-sizing:border-box}body{width:100vw;height:100vh;margin:0;padding:5px;display:flex;flex-direction:column;background-color:#ddd}#i{width:100%;min-height:50px;flex:1;margin-bottom:10px;resize:none;}#q{margin:auto;width:100%;padding:5px;flex:3}#q canvas{margin:auto;display:block}</style>
 
 
-<div id=q></div>
-<style>
-    * {
-        box-sizing: border-box
-    }
-    
-    body {
-        width: 100vw;
-        height: 100vh;
-        margin: 0;
-        padding: 5px;
-        display: flex;
-        flex-direction: column;
-        background-color: #ddd
-    }
-    
-    #i {
-        width: 100%;
-        min-height: 50px;
-        flex: 1;
-        margin-bottom: 10px;
-        resize: none;
-    }
-    
-    #q {
-        margin: auto;
-        width: 100%;
-        padding: 5px;
-        flex: 3
-    }
-    
-    #q canvas {
-        margin: auto;
-        display: block
-    }
-</style>
+
 <script>
-    M = 2950, window.onload = (() => {
-        q = document.getElementById("q"), i = document.getElementById("i"), u = (() => {
-
-            function setCookie(cname, cvalue, exdays) {
+  M = 2950, window.onload = (() => {
+    function setCookie(cname, cvalue, exdays) {
                const d = new Date();
                d.setTime(d.getTime() + (exdays*24*60*60*1000));
                let expires = "expires="+ d.toUTCString();
-               document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+               document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;SameSite=strict";
              }
-         
+
              function getCookie(cname) {
                let name = cname + "=";
                let decodedCookie = decodeURIComponent(document.cookie);
@@ -66,35 +30,34 @@
                }
                return "";
              }
-         
-         
-         
-         let cookie_qrcode = getCookie("cookie_qrcode");
-               if (cookie_qrcode != "") {
-                 document.getElementById("i").value = cookie_qrcode;
-               }
-           
-            if (s = Math.max(Math.min(q.clientWidth, q.clientHeight) - 10, 50), t = i.value, t.length > M) alert(`Text is ${t.length-M} bytes too long`);
-            else try {
-                
-                setCookie(t, cookie_qrcode, 365);
-                
-                q.innerHTML = "", QrCreator.render({
-                    text: "https://payments.pabbly.com/subscribe/64e770d1809db83c6cfaf47d/loterij?naam_verkoper="+t+"&street=Korteweg&city=Rockanje&zip_code=3235CH&country=NL,
-                    radius: 0,
-                    ecLevel: "L",
-                    background: "#fff",
-                    size: s
-                }, q);
-            } catch (e) {
-                alert("Failed to generate QR code");
-            }
-        }), u(), i.oninput = u, window.onresize = u;
-    });
 
-      
+          let cookie_qrcode = getCookie("cookie_qrcode");
+          if (cookie_qrcode != "") {
+            document.getElementById("i").value = cookie_qrcode;
+          }
+
+      q = document.getElementById("q"), i = document.getElementById("i"), u = (() => {
+          if (s = Math.max(Math.min(q.clientWidth, q.clientHeight) - 10, 50), t = i.value, t.length > M) alert(`Text is ${t.length-M} bytes too long`);
+          else try {
+              q.innerHTML = "", QrCreator.render({
+                  text: "https://payments.pabbly.com/subscribe/64e770d1809db83c6cfaf47d/loterij?naam_verkoper="+t+"&street=Korteweg&city=Rockanje&zip_code=3235CH&country=NL",
+                  radius: 0,
+                  ecLevel: "L",
+                  background: "#fff",
+                  size: s
+              }, q);
+
+              setCookie("cookie_qrcode", t, 365);
+
+          } catch (e) {
+              alert("Failed to generate QR code")
+          }
+      }), u(), i.oninput = u, window.onresize = u
+  });
 </script>
 <script>
+
+
 //SOURCE: https://cdn.jsdelivr.net/npm/qr-creator/dist/qr-creator.min.js
 //jquery-qrcode v0.14.0 - https://larsjung.de/jquery-qrcode/
 'use strict';let G=null;class H{}H.render=function(w,B){G(w,B)};self.QrCreator=H;
