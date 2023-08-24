@@ -240,7 +240,7 @@
             qrcode.innerHTML = "";
             // @TODO: I probably could do that border stuff more efficiently if I prepared a canvas and passed it to the render method
             try {
-                setCookie(qrcode, cookie_qrcode, 365);
+                setCookie(text, cookie_qrcode, 365);
                 QrCreator.render({
                     text: text,
                     radius: 0.0, // square pixels
